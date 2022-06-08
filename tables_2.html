@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <style>
+  </style>
+  <body>
+
+    <h2>Some HTML table tests</h2>    
+    
+    <div id="root"></div>
+    
+  </body>
+</html>
+
+<script>
+ let data = [
+   {section: "section 1", subsection1: "foo", subsection2: "12",},
+   {section: "section 1", subsection1: "bar", subsection2: "52",},
+   {section: "section 1", subsection1: "baz", subsection2: "55",},
+   {section: "section 2", subsection1: "foobar", subsection2: "42",},
+   {section: "section 2", subsection1: "foobaz", subsection2: "39",},
+   {section: "section 2", subsection1: "barbaz", subsection2: "61",},
+ ];
+
+ let table = document.createElement("table");
+ 
+ for (let i = 0; i < data.length; i++) {
+   // header row
+   let header = document.createElement("tr");
+   for (let prop in data[i]) {
+     let th = document.createElement("th");
+     let txt = document.createTextNode(prop);
+     th.appendChild(txt);
+     header.appendChild(th);
+   }
+   table.appendChild(header);
+
+   // rows
+   let tr = document.createElement("tr");
+   for (let prop in data[i]) {
+     let td = document.createElement("td");
+     let txt = document.createTextNode(data[i][prop]);
+     td.appendChild(txt);
+     tr.appendChild(td);
+   }   
+   table.appendChild(tr);
+ }
+
+ document.querySelector("#root").appendChild(table);
+ 
+</script>
