@@ -22,18 +22,18 @@
  ];
 
  let table = document.createElement("table");
+
+ // header row
+ let header = document.createElement("tr");
+ for (let prop in data[0]) {
+   let th = document.createElement("th");
+   let txt = document.createTextNode(prop);
+   th.appendChild(txt);
+   header.appendChild(th);
+ }
+ table.appendChild(header);
  
  for (let i = 0; i < data.length; i++) {
-   // header row
-   let header = document.createElement("tr");
-   for (let prop in data[i]) {
-     let th = document.createElement("th");
-     let txt = document.createTextNode(prop);
-     th.appendChild(txt);
-     header.appendChild(th);
-   }
-   table.appendChild(header);
-
    // rows
    let tr = document.createElement("tr");
    for (let prop in data[i]) {
