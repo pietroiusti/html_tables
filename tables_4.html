@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <style>
+  </style>
+  <body>
+
+    <h2>Some HTML table tests</h2>
+
+    <div id="root"></div>
+
+  </body>
+</html>
+
+<script>
+ let data = [
+   {section: "section 1", subsection1: "foo", subsection2: "12",},
+   {section: "section 1", subsection1: "bar", subsection2: "52",},
+   {section: "section 1", subsection1: "foobaz", subsection2: "39",},
+   {section: "section 1", subsection1: "baz", subsection2: "55",},
+   {section: "section 2", subsection1: "foobar", subsection2: "42",},
+   {section: "section 2", subsection1: "foobaz", subsection2: "39",},
+   {section: "section 2", subsection1: "barbaz", subsection2: "61",}, 
+   {section: "section 2", subsection1: "baz", subsection2: "55",},
+ ];
+
+ // Take:
+ //    - data to sort (of the type above)
+ //    - parent element for table
+ //    - index of the key to sort data by
+ function createTable(data, parentEl, sortIndex) {
+   let table = document.createElement("table");
+   
+   // sort
+   data.sort((a, b) => {
+     let obj_arr_1 = Object.entries(a);
+     let obj_arr_2 = Object.entries(b);
+     if (obj_arr_1[sortIndex][1] === obj_arr_2[sortIndex][1]) {
+       return 0;
+     } else if (obj_arr_1[sortIndex][1] > obj_arr_2[sortIndex][1]) {
+       return 1;
+     } else {
+       return -1;
+     }
+   });
+
+   // header row
+   let header = document.createElement("tr");
+   for (let prop in data[0]) {
+     let th = document.createElement("th");
+     let txt = document.createTextNode(prop);
+     th.appendChild(txt);
+     header.appendChild(th);
+   }
+   table.appendChild(header);
+
+   // rows
+   for (let i = 0; i < data.length; i++) {
+     // rows
+     let tr = document.createElement("tr");
+
+     let line = data[i];
+     Object.entries(line).forEach( ([key, value], index) => {
+       let td = document.createElement("td");
+       let txt = document.createTextNode(value);
+       if (index === 0) {
+         var checkbox = document.createElement("input");
+         checkbox.type = "checkbox";
+         td.appendChild(checkbox);
+       }
+       td.appendChild(txt);
+       tr.appendChild(td);
+     });
+
+     table.appendChild(tr);
+   }
+
+   parentEl.appendChild(table);
+ }
+
+ createTable(data, document.querySelector("#root"), 2);
+
+</script>
