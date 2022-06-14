@@ -34,16 +34,12 @@
    table.id = "table";
    
    // sort
-   data.sort((a, b) => {
-     let obj_arr_1 = Object.entries(a);
-     let obj_arr_2 = Object.entries(b);
-     if (obj_arr_1[sortIndex][1] === obj_arr_2[sortIndex][1]) {
-       return 0;
-     } else if (obj_arr_1[sortIndex][1] > obj_arr_2[sortIndex][1]) {
-       return 1;
-     } else {
-       return -1;
-     }
+   data.sort((first, second) => {
+     let obj_arr_1 = Object.entries(first);
+     let obj_arr_2 = Object.entries(second);
+     a = obj_arr_1[sortIndex][1];
+     b = obj_arr_2[sortIndex][1];
+     return a === b ? 0 : a > b ? 1 : -1;
    });
 
    let header = document.createElement("tr");
