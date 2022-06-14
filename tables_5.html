@@ -43,8 +43,11 @@
    });
 
    let header = document.createElement("tr");
+   // keep in mind that within the forEach you cannot use await. You
+   // might want to use for (let key in obj)
    Object.entries(data[0]).forEach(([key, value], index) => {
      let th = document.createElement("th");
+     th.style.cursor = "pointer";
      th.addEventListener('click', (e) => {
        console.log('foo');
        parentEl.innerHTML = "";
