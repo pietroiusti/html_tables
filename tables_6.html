@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <style>
+  </style>
+  <body>
+
+    <h2>Some HTML table tests</h2>
+
+    <div id="root"></div>
+
+  </body>
+</html>
+
+<script>
+ let data = [
+   {section: "section 1", subsection1: "foo", subsection2: "12",},
+   {section: "section 1", subsection1: "bar", subsection2: "52",},
+   {section: "section 1", subsection1: "foobaz", subsection2: "39",},
+   {section: "section 1", subsection1: "baz", subsection2: "55",},
+   {section: "section 2", subsection1: "foobar", subsection2: "42",},
+   {section: "section 2", subsection1: "foobaz", subsection2: "39",},
+   {section: "section 2", subsection1: "barbaz", subsection2: "61",}, 
+   {section: "section 2", subsection1: "baz", subsection2: "55",},
+ ];
+
+ // Take:
+ //    - data to sort (of the type above)
+ //    - parent element for table
+ //    - index of the key to sort data by
+ //
+ // and create table with clickable headers for sorting
+ function createTable(data, parentEl, sortIndex) {
+   let table = document.createElement("table");
+   table.id = "table";
+   
+   // sort
+   data.sort((first, second) => {
+     let obj_arr_1 = Object.entries(first);
+     let obj_arr_2 = Object.entries(second);
+     a = obj_arr_1[sortIndex][1];
+     b = obj_arr_2[sortIndex][1];
+     return a === b ? 0 : a > b ? 1 : -1;
+   });
+
+   let header = document.createElement("tr");
+   // keep in mind that within the forEach you cannot use await. You
+   // might want to use for (let key in obj)
+
+   // Create clickable (for sorting) table headers
+   Object.entries(data[0]).forEach(([key, value], index) => {
+     let th = document.createElement("th");
+     th.style.cursor = "pointer";
+
+     if (index === sortIndex) {
+       th.style.color = "black";
+     } else {
+       th.style.color = "grey";
+     }
+
+
+     th.addEventListener('click', (e) => {
+       console.log('foo');
+       parentEl.innerHTML = "";
+       createTable(data, parentEl, index);
+     });
+     let txt = document.createTextNode(key);
+     th.appendChild(txt);
+     header.appendChild(th);
+   });
+   table.appendChild(header);
+
+   // rows
+   for (let i = 0; i < data.length; i++) {
+     // rows
+     let tr = document.createElement("tr");
+
+     let line = data[i];
+     Object.entries(line).forEach( ([key, value], index) => {
+       let td = document.createElement("td");
+       let txt = document.createTextNode(value);
+       if (index === 0) {
+         var checkbox = document.createElement("input");
+         checkbox.type = "checkbox";
+         td.appendChild(checkbox);
+       }
+       td.appendChild(txt);
+       tr.appendChild(td);
+     });
+
+     table.appendChild(tr);
+   }
+
+   parentEl.appendChild(table);
+ }
+
+ createTable(data, document.querySelector("#root"), 0);
+
+</script>
